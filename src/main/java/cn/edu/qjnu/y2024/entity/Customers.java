@@ -5,88 +5,123 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 
+/**
+ * <p>
+ * 客户信息表
+ * </p>
+ *
+ * @author y2024
+ * @since 2025-08-13
+ */
+@Getter
+@Setter
+@ToString
 @TableName("customers")
 public class Customers implements Serializable {
-    @Serial
+
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "customerId", type = IdType.AUTO)
+    /**
+     * 客户ID（自增主键）
+     */
+    @TableId(value = "customer_id", type = IdType.AUTO)
     private Integer customerId;
 
-    @TableField("customerName")
+    /**
+     * 客户姓名
+     */
+    @TableField("customer_name")
     private String customerName;
 
-    @TableField("contact")
-    private String contact;
+    /**
+     * 客户电话
+     */
+    @TableField("customer_phone")
+    private String customerPhone;
 
-    @TableField("email")
-    private String email;
+    /**
+     * 客户邮箱
+     */
+    @TableField("customer_email")
+    private String customerEmail;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField("createdAt")
-    private String createdAt;
+    /**
+     * 性别（男、女、未知）
+     */
+    @TableField("customer_gender")
+    private String customerGender;
 
-    public Integer getCustomerId() {
-        return customerId;
-    }
+    /**
+     * 生日
+     */
+    @TableField("customer_birthday")
+    private Date customerBirthday;
 
-    @SuppressWarnings("unused")
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
-    }
+    /**
+     * 客户地址
+     */
+    @TableField("customer_address")
+    private String customerAddress;
 
-    public String getCustomerName() {
-        return customerName;
-    }
+    /**
+     * 客户等级（VIP、黄金、白银、普通）
+     */
+    @TableField("customer_level")
+    private String customerLevel;
 
-    @SuppressWarnings("unused")
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
+    /**
+     * 注册时间
+     */
+    @TableField("registration_date")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+08:00")
+    private LocalDateTime registrationDate;
 
-    @SuppressWarnings("unused")
-    public String getContact() {
-        return contact;
-    }
+    /**
+     * 最后登录时间
+     */
+    @TableField("last_login_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+08:00")
+    private LocalDateTime lastLoginTime;
 
-    @SuppressWarnings("unused")
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
+    /**
+     * 总订单数
+     */
+    @TableField("total_orders")
+    private Integer totalOrders;
 
-    @SuppressWarnings("unused")
-    public String getEmail() {
-        return email;
-    }
+    /**
+     * 总消费金额
+     */
+    @TableField("total_amount")
+    private Double totalAmount;
 
-    @SuppressWarnings("unused")
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    /**
+     * 状态（正常、冻结、注销）
+     */
+    private String status;
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
+    /**
+     * 创建时间
+     */
+    @TableField("created_at")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+08:00")
+    private LocalDateTime createdAt;
 
-    @SuppressWarnings("unused")
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    @Override
-    public String toString() {
-        return "Customers{" +
-                "customerId=" + customerId +
-                ", customerName='" + customerName + '\'' +
-                ", contact='" + contact + '\'' +
-                ", email='" + email + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                '}';
-    }
+    /**
+     * 更新时间
+     */
+    @TableField("updated_at")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+08:00")
+    private LocalDateTime updatedAt;
 }
+
+

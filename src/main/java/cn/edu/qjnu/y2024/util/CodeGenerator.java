@@ -21,7 +21,7 @@ public class CodeGenerator {
 //                        .xml("mapper.xml")
                 )
                 .strategyConfig(builder -> {
-                            builder.addInclude("product_base"); //设置生成的表名
+                            builder.addInclude("order_pending"); //设置生成的表名
                         }
 //                        .entityBuilder()
 //                        .enableLombok()

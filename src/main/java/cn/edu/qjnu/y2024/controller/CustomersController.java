@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/customer")
 @CrossOrigin
@@ -23,7 +25,7 @@ public class CustomersController {
 
     // 添加CSP头
     private void addSecurityHeaders(HttpServletResponse response) {
-        response.setHeader("X-Content-Type-Options", "no sniff");
+        response.setHeader("X-Content-Type-Options", "nosniff");
         response.setHeader("X-Frame-Options", "DENY");
     }
 
@@ -59,15 +61,15 @@ public class CustomersController {
     public ElResult<Customers> addCustomer(@RequestBody Customers customer, HttpServletResponse response) {
         addSecurityHeaders(response);
         try {
-            if (customer.getCustomerName() == null || customer.getCustomerName().trim().isEmpty()) {
+            if (customer.getCustomerName() == null || customer.getCustomerName().isEmpty()) {
                 return ElResult.error("客户名称不能为空");
             }
-            if (customer.getCreatedAt() == null || customer.getCreatedAt().trim().isEmpty()) {
-                return ElResult.error("创建时间不能为空");
+            if (customer.getCreatedAt() == null) {
+                customer.setCreatedAt(LocalDateTime.now()); // 如果为空，则设置为当前时间
             }
 
             QueryWrapper<Customers> qw = new QueryWrapper<>();
-            qw.eq("customerName", customer.getCustomerName());
+            qw.eq("customer_name", customer.getCustomerName());
             if (customersService.count(qw) > 0) {
                 return ElResult.error("客户名称已存在");
             }
@@ -110,3 +112,4 @@ public class CustomersController {
         }
     }
 }
+
